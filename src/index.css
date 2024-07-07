@@ -5,5 +5,20 @@
 @layer base {
   body {
     font-family: Helvetica, sans-serif;
+    @apply text-xl;
+  }
+
+  input,
+  label,
+  button {
+    @apply m-4 p-2;
+  }
+
+  input {
+    @apply border-black border rounded-md;
+  }
+
+  button {
+    @apply bg-slate-950 text-white px-6 py-2 rounded-md hover:bg-slate-800;
   }
 }

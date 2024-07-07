@@ -1,5 +1,6 @@
 import { comparePassword, hashPassword } from "../middleware/authentication.js";
 import User from "../model/userSchema.js";
+import Product from "../model/productSchema.js";
 import { createJwt } from "../utils/jwt.js";
 
 /**
@@ -25,7 +26,7 @@ export const signIn = async (req, res) => {
   }
 
   const token = createJwt(user);
-  res.json(token);
+  res.status(200).json({ token });
 };
 
 export const signUp = async (req, res) => {
@@ -35,5 +36,21 @@ export const signUp = async (req, res) => {
   });
 
   const token = createJwt(user);
-  res.json(token);
+  res.status(200).json({ token });
+};
+
+export const addToCart = async (req, res) => {
+  const user = await User.findOne(req.user.id);
+
+  const productId = req.body.productId;
+
+  const product = await Product.findById(productId);
+  if (!product) {
+    return res.status(404).json({ message: "Product not found" });
+  }
+
+  user.carts.push(product);
+
+  await user.save();
+  res.status(200).json({ message: "Product added to cart", carts: user.carts });
 };
