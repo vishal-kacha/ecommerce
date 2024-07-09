@@ -12,7 +12,6 @@ router.get("/", (_req, res) => {
   res.json({ message: "hello" });
 });
 
-router.get("/products", getProducts);
 router.post("/add-product", addProduct);
 router.delete("/delete-product", deleteProduct);
 router.post("/add-to-cart", addToCart);

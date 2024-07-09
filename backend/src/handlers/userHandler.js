@@ -3,25 +3,21 @@ import User from "../model/userSchema.js";
 import Product from "../model/productSchema.js";
 import { createJwt } from "../utils/jwt.js";
 
-/**
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
 export const signIn = async (req, res) => {
-  const user = await User.find({
+  const user = await User.findOne({
     username: req.body.username,
   });
 
   if (!user) {
-    res.json({ message: "no user found" });
+    res.status(401).json({ message: "no user found" });
     return;
   }
 
-  const isValid = comparePassword(req.body.password, req.body.password);
+  const isValid = await comparePassword(req.body.password, user.password);
 
   if (!isValid) {
     res.status(401);
-    res.json({ message: "nope" });
+    res.json({ message: "password invalid" });
     return;
   }
 

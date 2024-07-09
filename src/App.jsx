@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./utils/ProtectedRoute";
 import LoadedToken from "./utils/LoadedToken";
 import { lazy, Suspense } from "react";
+import Product from "./pages/Product";
 
 const Home = lazy(() => import("./pages/Home"));
 const Signin = lazy(() => import("./pages/Signin"));
@@ -15,11 +15,9 @@ function App() {
           <Route
             path="/"
             element={
-              <ProtectedRoute>
-                <Suspense fallback={<>Loading ..</>}>
-                  <Home />
-                </Suspense>
-              </ProtectedRoute>
+              <Suspense fallback={<>Loading ..</>}>
+                <Home />
+              </Suspense>
             }
           />
           <Route
@@ -42,6 +40,7 @@ function App() {
               </LoadedToken>
             }
           />
+          <Route path="/product/:id" element={<Product />}></Route>
         </Routes>
       </BrowserRouter>
     </>

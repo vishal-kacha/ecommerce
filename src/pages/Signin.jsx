@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -12,6 +15,7 @@ const Signin = () => {
             const formData = new FormData(e.target);
             const username = formData.get("username");
             const password = formData.get("password");
+            setLoading(true);
 
             const response = await fetch("http://localhost:3000/signin", {
               method: "POST",
@@ -20,6 +24,10 @@ const Signin = () => {
               },
               body: JSON.stringify({ username, password }),
             });
+
+            if (response.status !== 200) {
+              setLoading(false);
+            }
 
             if (response.status === 200) {
               const { token } = await response.json();
@@ -31,7 +39,7 @@ const Signin = () => {
           <h1 className="m-4 p-2">Signin</h1>
           <div>
             <label htmlFor="username">username</label>
-            <input type="text" placeholder="Enter a username" name="text" />
+            <input type="text" placeholder="Enter a username" name="username" />
           </div>
           <div>
             <label htmlFor="password">Password</label>
@@ -41,7 +49,17 @@ const Signin = () => {
               name="password"
             />
           </div>
-          <button type="submit">Sign In</button>
+          {!loading ? (
+            <button type="submit">Sign In</button>
+          ) : (
+            <button
+              type="submit"
+              disabled
+              className="bg-slate-200 text-black border border-1 border-slate-400 opacity-80 hover:bg-slate-200"
+            >
+              Loading...
+            </button>
+          )}
         </form>
       </div>
     </>

@@ -6,6 +6,18 @@ export const getProducts = async (req, res) => {
   res.json(data);
 };
 
+export const product = async (req, res) => {
+  const product = await Product.findOne({
+    _id: req.params.id,
+  });
+
+  if (!product) {
+    res.status(404).json({ message: "no product found" });
+  }
+
+  res.status(200).json(product);
+};
+
 export const addProduct = async (req, res) => {
   const data = await Product.create({
     name: req.body.name,
