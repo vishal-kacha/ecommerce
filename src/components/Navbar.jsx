@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const [state, setState] = useState(true);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -23,15 +25,23 @@ export const Navbar = () => {
               </Link>
             </>
           ) : (
-            <button
-              className="bg-rose-500 text-md hover:bg-rose-700"
-              onClick={() => {
-                localStorage.clear();
-                setState(false);
-              }}
-            >
-              log out
-            </button>
+            <>
+              <Link to={"/cart"}>
+                <button className="m-0 p-2 px-4 bg-neutral-50 shadow-sm border-2 text-2xl hover:bg-neutral-100">
+                  🛒
+                </button>
+              </Link>
+              <button
+                className="bg-rose-500 text-md hover:bg-rose-700"
+                onClick={() => {
+                  localStorage.clear();
+                  setState(false);
+                  navigate("/");
+                }}
+              >
+                log out
+              </button>
+            </>
           )}
         </div>
       </div>

@@ -36,7 +36,7 @@ export const signUp = async (req, res) => {
 };
 
 export const addToCart = async (req, res) => {
-  const user = await User.findOne(req.user.id);
+  const user = await User.findOne({ _id: req.user.id });
 
   const productId = req.body.productId;
 
@@ -49,4 +49,21 @@ export const addToCart = async (req, res) => {
 
   await user.save();
   res.status(200).json({ message: "Product added to cart", carts: user.carts });
+};
+
+export const listCartItems = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate({
+      path: "carts",
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ carts: user.carts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 };

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoadedToken from "./utils/LoadedToken";
 import { lazy, Suspense } from "react";
 import Product from "./pages/Product";
+import Cart from "./pages/Cart";
 
 const Home = lazy(() => import("./pages/Home"));
 const Signin = lazy(() => import("./pages/Signin"));
@@ -41,6 +42,7 @@ function App() {
             }
           />
           <Route path="/product/:id" element={<Product />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
         </Routes>
       </BrowserRouter>
     </>

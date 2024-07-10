@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Carousel from "../components/Carousel";
 import { Navbar } from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
-import { Link } from "react-router-dom";
 
 const Home = () => {
   const [data, setData] = useState([]);
