@@ -43,6 +43,7 @@ const Cart = () => {
               <h1 className="m-4">{item.name}</h1>
               <p className="m-4">Rs. {item.price}</p>
               <button>Buy now</button>
+              <button className="bg-rose-600 hover:bg-rose-800">remove</button>
             </div>
           </div>
         ))}
